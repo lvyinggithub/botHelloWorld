@@ -8,24 +8,35 @@ const luis = new builder.IntentDialog({
 });
 
 //Luis
-// Trata a intenção sobre - atenção com o nome da intent que é case-sensitive
+
 luis.matches('sobre', (session, args, next) => {
-    session.send('Olá, eu sou um bot que te ensina a fazer hello world!');
+    session.send('Olá, eu sou um bot que te ensina um pouco sobre programacao! Vamos fazer alguns hello worlds?');
 })
 
-// Trata a intenção cumprimento - atenção com o nome da intent que é case-sensitive
 luis.matches('cumprimento', (session, args, next) => {
-    session.send('Olá, vamos fazer alguns hello worlds?');
+    session.send('Olá, eu sou o helloWorld Bot!');
+})
+
+luis.matches('programacao', (session, args, next) => {
+    session.send('Programação é uma forma de comunicação home - maquina, foi graças a ela que eu fui feito!');
+})
+
+luis.matches('logica', (session, args, next) => {
+    session.send('Lógica é uma forma de percepcáo intelectual, que tenta definir o que é verdadeiro e o que não é atraves de fatos.');
+})
+
+luis.matches('ide', (session, args, next) => {
+    session.send('IDE é um ambiente de desenvolvimento integrado, ou seja, um ambiente onde temos juntas diversas das ferramentas da nosssa necessidade como programadores.');
 })
 
 // Trata a intenção cotacao - atenção com o nome da intent que é case-sensitive
 luis.matches('hello world', (session, args, next) => {
     const linguagens = builder.EntityRecognizer.findAllEntities(args.entities, 'linguagem');
-    console.log(linguagens);
+    // console.log(linguagens);
     const message = linguagens.map(m => m.entity).join(', ');
     session.send(`Eu vou verificar um exemplo de hello world em **${message}**`);
     const endpoint = `https://hello-world-bot.azurewebsites.net/hello/consultarByLinguagem/${message}`;
-    console.log("endepoint: ", endpoint);
+    // console.log("endepoint: ", endpoint);
     request(endpoint, (error, response, body) => {
         if (error || !body)
             return session.send('Ocorreu algum erro, tente novamente mais tarde.')
@@ -41,6 +52,9 @@ luis.matches('hello world', (session, args, next) => {
 luis.onDefault((session, args) => {
     session.send(`Desculpe, não consegui entender a frase **${session.message.text}**`);
 })
+
+
+
 
 
 module.exports = luis;

@@ -6,6 +6,7 @@ const connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
+
 const bot = module.exports = new builder.UniversalBot(connector);
 bot.set('storage', new builder.MemoryBotStorage());
 
